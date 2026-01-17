@@ -1,0 +1,141 @@
+<section id="simulateur">
+        <h2>Simulateur de prêt</h2>
+        <form id="simulateur-form">
+            <label for="montant">Montant du prêt (CAD) :</label>
+            <input type="number" id="montant" name="montant" min="1000" max="100000" step="100" required>
+
+            <label for="duree">Durée (mois) :</label>
+            <input type="number" id="duree" name="duree" min="6" max="120" required>
+
+            <label for="taux">Taux d’intérêt :</label>
+            <select id="taux" name="taux" required>
+                <option value="fixe">Fixe</option>
+                <option value="variable">Variable</option>
+            </select>
+
+            <label for="tauxValeur">Valeur du taux (%) :</label>
+            <input type="number" id="tauxValeur" name="tauxValeur" min="0.1" max="25" step="0.01" required>
+
+            <button type="button" onclick="calculerMensualite()">Calculer la mensualité</button>
+        </form>
+        <p id="resultat"></p>
+        <p><em>Simulation indicative, sans engagement.</em></p>
+    </section>
+
+    <section id="demande">
+        <h2>Demande de prêt</h2>
+        <form id="demande-form">
+            <div id="etape1">
+                <h3>Étape 1 : Informations personnelles</h3>
+                <label for="nom">Nom complet :</label>
+                <input type="text" id="nom" name="nom" required>
+
+                <label for="adresse">Adresse :</label>
+                <input type="text" id="adresse" name="adresse" required>
+
+                <label for="nas">Numéro d'assurance sociale (NAS) :</label>
+                <input type="text" id="nas" name="nas" pattern="\d{3}-\d{3}-\d{3}" placeholder="123-456-789" required>
+
+                <button type="button" onclick="allerEtape2()">Suivant</button>
+            </div>
+            <div id="etape2" style="display:none;">
+                <h3>Étape 2 : Revenus et charges mensuelles</h3>
+                <label for="revenus">Revenus mensuels (CAD) :</label>
+                <input type="number" id="revenus" name="revenus" min="0" required>
+
+                <label for="charges">Charges mensuelles (CAD) :</label>
+                <input type="number" id="charges" name="charges" min="0" required>
+
+                <button type="button" onclick="allerEtape1()">Précédent</button>
+                <button type="button" onclick="allerEtape3()">Suivant</button>
+            </div>
+            <div id="etape3" style="display:none;">
+                <h3>Étape 3 : Téléversement des justificatifs</h3>
+                <label for="idPiece">Pièce d’identité :</label>
+                <input type="file" id="idPiece" name="idPiece" accept="image/*,.pdf" required>
+
+                <label for="releveBancaire">Relevé bancaire :</label>
+                <input type="file" id="releveBancaire" name="releveBancaire" accept="image/*,.pdf" required>
+
+                <label><input type="checkbox" id="consentement" name="consentement" required> J'accepte la politique de confidentialité</label>
+
+                <button type="button" onclick="allerEtape2()">Précédent</button>
+                <button type="submit">Envoyer la demande</button>
+            </div>
+        </form>
+        <div class="progress-bar"><div class="progress" id="progress"></div></div>
+    </section>
+
+    <section id="espace-client">
+        <h2>Espace client</h2>
+        <p>Connexion sécurisée avec authentification à deux facteurs.</p>
+        <p>Tableau de bord avec statut des demandes, historique, documents et messagerie privée.</p>
+    </section>
+
+    <section id="temoignages">
+        <h2>Témoignages clients</h2>
+        <blockquote>"Grâce à ce service, j’ai pu financer mes rénovations sans stress." — <em>Marie, Québec</em></blockquote>
+        <blockquote>"Processus simple et rapide, je recommande vivement." — <em>Jean-François, Montréal</em></blockquote>
+        <blockquote>"Un accompagnement humain et professionnel." — <em>Fatima, Ottawa</em></blockquote>
+        <p>Les clients connectés peuvent soumettre leur témoignage via leur espace client.</p>
+    </section>
+
+    <section id="admin">
+        <h2>Interface Admin</h2>
+        <p>Gestion des demandes, validation, export des données et journal d’audit.</p>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2025 Banque Canadienne - Tous droits réservés.</p>
+</footer>
+
+<script>
+    function calculerMensualite() {
+        const montant = parseFloat(document.getElementById('montant').value);
+        const duree = parseInt(document.getElementById('duree').value);
+        const tauxType = document.getElementById('taux').value;
+        const tauxValeur = parseFloat(document.getElementById('tauxValeur').value) / 100;
+
+        if (isNaN(montant) || isNaN(duree) || isNaN(tauxValeur)) {
+            alert('Veuillez remplir tous les champs correctement.');
+            return;
+        }
+
+        // Calcul de la mensualité selon la formule standard
+        const mensualite = (montant * tauxValeur) / (1 - Math.pow(1 + tauxValeur, -duree));
+        document.getElementById('resultat').textContent = 'Mensualité estimée : ' + mensualite.toFixed(2) + ' CAD';
+    }
+
+    function allerEtape1() {
+        document.getElementById('etape1').style.display = 'block';
+        document.getElementById('etape2').style.display = 'none';
+        document.getElementById('etape3').style.display = 'none';
+        document.getElementById('progress').style.width = '33%';
+    }
+
+    function allerEtape2() {
+        document.getElementById('etape1').style.display = 'none';
+        document.getElementById('etape2').style.display = 'block';
+        document.getElementById('etape3').style.display = 'none';
+        document.getElementById('progress').style.width = '66%';
+    }
+
+    function allerEtape3() {
+        document.getElementById('etape1').style.display = 'none';
+        document.getElementById('etape2').style.display = 'none';
+        document.getElementById('etape3').style.display = 'block';
+        document.getElementById('progress').style.width = '100%';
+    }
+
+    document.getElementById('demande-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        if (!document.getElementById('consentement').checked) {
+            alert('Vous devez accepter la politique de confidentialité.');
+            return;
+        }
+        alert('Demande envoyée avec succès !');
+        this.reset();
+        allerEtape1();
+        document.getElementById('progress').style.width = '0%';
+    });
+</script>
