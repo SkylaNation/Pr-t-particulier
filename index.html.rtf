@@ -1,0 +1,147 @@
+{\rtf1\fbidis\ansi\ansicpg1252\deff0\nouicompat\deflang1036{\fonttbl{\f0\fnil Segoe UI;}}
+{\colortbl ;\red0\green0\blue0;}
+{\*\generator Riched20 10.0.26100}\viewkind4\uc1 
+\pard\tx720\cf1\f0\fs38\lang1033 <!DOCTYPE html> <html lang="fr"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Site de pr\'eat particulier</title> <style> body \{ font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: #333; \} header \{ background: #004080; color: white; padding: 20px; text-align: center; \} nav \{ background: #003366; padding: 10px; \} nav a \{ color: white; margin: 0 15px; text-decoration: none; font-weight: bold; \} nav a:hover \{ text-decoration: underline; \} main \{ padding: 20px; max-width: 900px; margin: auto; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); \} section \{ margin-bottom: 40px; \} h1, h2 \{ color: #004080; \} button.cta \{ background: #007acc; color: white; border: none; padding: 12px 25px; font-size: 1.1em; cursor: pointer; border-radius: 5px; \} button.cta:hover \{ background: #005f99; \} form label \{ display: block; margin: 10px 0 5px; font-weight: bold; \} form input, form select \{ width: 100%; padding: 8px; box-sizing: border-box; \} .progress-bar \{ background: #e0e0e0; border-radius: 5px; overflow: hidden; margin: 10px 0 20px; \} .progress \{ background: #007acc; height: 15px; width: 33%; \} footer \{ background: #003366; color: white; text-align: center; padding: 15px; font-size: 0.9em; \} </style> </head> <body> <header> <h1>Banque Canadienne - Pr\'eat Particulier</h1> <p>Votre solution simple et s\'e9curis\'e9e pour financer vos projets</p> </header> <nav> <a href="#accueil">Accueil</a> <a href="#simulateur">Simulateur</a> <a href="#demande">Demande</a> <a href="#espace-client">Espace client</a> <a href="#temoignages">T\'e9moignages</a> <a href="#admin">Admin</a> </nav> <main> <section id="accueil"> <h2>Accueil</h2> <p>Bienvenue sur notre site de pr\'eat particulier conforme aux normes canadiennes. Utilisez notre simulateur pour estimer vos mensualit\'e9s et faites votre demande en toute s\'e9curit\'e9.</p> <button class="cta" onclick="document.getElementById('simulateur').scrollIntoView(\{ behavior: 'smooth' \});">Simuler mon pr\'eat maintenant</button> </section>\par
+\par
+    <section id="simulateur">\par
+        <h2>Simulateur de pr\'eat</h2>\par
+        <form id="simulateur-form">\par
+            <label for="montant">Montant du pr\'eat (CAD) :</label>\par
+            <input type="number" id="montant" name="montant" min="1000" max="100000" step="100" required>\par
+\par
+            <label for="duree">Dur\'e9e (mois) :</label>\par
+            <input type="number" id="duree" name="duree" min="6" max="120" required>\par
+\par
+            <label for="taux">Taux d\rquote int\'e9r\'eat :</label>\par
+            <select id="taux" name="taux" required>\par
+                <option value="fixe">Fixe</option>\par
+                <option value="variable">Variable</option>\par
+            </select>\par
+\par
+            <label for="tauxValeur">Valeur du taux (%) :</label>\par
+            <input type="number" id="tauxValeur" name="tauxValeur" min="0.1" max="25" step="0.01" required>\par
+\par
+            <button type="button" onclick="calculerMensualite()">Calculer la mensualit\'e9</button>\par
+        </form>\par
+        <p id="resultat"></p>\par
+        <p><em>Simulation indicative, sans engagement.</em></p>\par
+    </section>\par
+\par
+    <section id="demande">\par
+        <h2>Demande de pr\'eat</h2>\par
+        <form id="demande-form">\par
+            <div id="etape1">\par
+                <h3>\'c9tape 1 : Informations personnelles</h3>\par
+                <label for="nom">Nom complet :</label>\par
+                <input type="text" id="nom" name="nom" required>\par
+\par
+                <label for="adresse">Adresse :</label>\par
+                <input type="text" id="adresse" name="adresse" required>\par
+\par
+                <label for="nas">Num\'e9ro d'assurance sociale (NAS) :</label>\par
+                <input type="text" id="nas" name="nas" pattern="\\d\{3\}-\\d\{3\}-\\d\{3\}" placeholder="123-456-789" required>\par
+\par
+                <button type="button" onclick="allerEtape2()">Suivant</button>\par
+            </div>\par
+            <div id="etape2" style="display:none;">\par
+                <h3>\'c9tape 2 : Revenus et charges mensuelles</h3>\par
+                <label for="revenus">Revenus mensuels (CAD) :</label>\par
+                <input type="number" id="revenus" name="revenus" min="0" required>\par
+\par
+                <label for="charges">Charges mensuelles (CAD) :</label>\par
+                <input type="number" id="charges" name="charges" min="0" required>\par
+\par
+                <button type="button" onclick="allerEtape1()">Pr\'e9c\'e9dent</button>\par
+                <button type="button" onclick="allerEtape3()">Suivant</button>\par
+            </div>\par
+            <div id="etape3" style="display:none;">\par
+                <h3>\'c9tape 3 : T\'e9l\'e9versement des justificatifs</h3>\par
+                <label for="idPiece">Pi\'e8ce d\rquote identit\'e9 :</label>\par
+                <input type="file" id="idPiece" name="idPiece" accept="image/*,.pdf" required>\par
+\par
+                <label for="releveBancaire">Relev\'e9 bancaire :</label>\par
+                <input type="file" id="releveBancaire" name="releveBancaire" accept="image/*,.pdf" required>\par
+\par
+                <label><input type="checkbox" id="consentement" name="consentement" required> J'accepte la politique de confidentialit\'e9</label>\par
+\par
+                <button type="button" onclick="allerEtape2()">Pr\'e9c\'e9dent</button>\par
+                <button type="submit">Envoyer la demande</button>\par
+            </div>\par
+        </form>\par
+        <div class="progress-bar"><div class="progress" id="progress"></div></div>\par
+    </section>\par
+\par
+    <section id="espace-client">\par
+        <h2>Espace client</h2>\par
+        <p>Connexion s\'e9curis\'e9e avec authentification \'e0 deux facteurs.</p>\par
+        <p>Tableau de bord avec statut des demandes, historique, documents et messagerie priv\'e9e.</p>\par
+    </section>\par
+\par
+    <section id="temoignages">\par
+        <h2>T\'e9moignages clients</h2>\par
+        <blockquote>"Gr\'e2ce \'e0 ce service, j\rquote ai pu financer mes r\'e9novations sans stress." \emdash  <em>Marie, Qu\'e9bec</em></blockquote>\par
+        <blockquote>"Processus simple et rapide, je recommande vivement." \emdash  <em>Jean-Fran\'e7ois, Montr\'e9al</em></blockquote>\par
+        <blockquote>"Un accompagnement humain et professionnel." \emdash  <em>Fatima, Ottawa</em></blockquote>\par
+        <p>Les clients connect\'e9s peuvent soumettre leur t\'e9moignage via leur espace client.</p>\par
+    </section>\par
+\par
+    <section id="admin">\par
+        <h2>Interface Admin</h2>\par
+        <p>Gestion des demandes, validation, export des donn\'e9es et journal d\rquote audit.</p>\par
+    </section>\par
+</main>\par
+<footer>\par
+    <p>&copy; 2025 Banque Canadienne - Tous droits r\'e9serv\'e9s.</p>\par
+</footer>\par
+\par
+<script>\par
+    function calculerMensualite() \{\par
+        const montant = parseFloat(document.getElementById('montant').value);\par
+        const duree = parseInt(document.getElementById('duree').value);\par
+        const tauxType = document.getElementById('taux').value;\par
+        const tauxValeur = parseFloat(document.getElementById('tauxValeur').value) / 100;\par
+\par
+        if (isNaN(montant) || isNaN(duree) || isNaN(tauxValeur)) \{\par
+            alert('Veuillez remplir tous les champs correctement.');\par
+            return;\par
+        \}\par
+\par
+        // Calcul de la mensualit\'e9 selon la formule standard\par
+        const mensualite = (montant * tauxValeur) / (1 - Math.pow(1 + tauxValeur, -duree));\par
+        document.getElementById('resultat').textContent = 'Mensualit\'e9 estim\'e9e : ' + mensualite.toFixed(2) + ' CAD';\par
+    \}\par
+\par
+    function allerEtape1() \{\par
+        document.getElementById('etape1').style.display = 'block';\par
+        document.getElementById('etape2').style.display = 'none';\par
+        document.getElementById('etape3').style.display = 'none';\par
+        document.getElementById('progress').style.width = '33%';\par
+    \}\par
+\par
+    function allerEtape2() \{\par
+        document.getElementById('etape1').style.display = 'none';\par
+        document.getElementById('etape2').style.display = 'block';\par
+        document.getElementById('etape3').style.display = 'none';\par
+        document.getElementById('progress').style.width = '66%';\par
+    \}\par
+\par
+    function allerEtape3() \{\par
+        document.getElementById('etape1').style.display = 'none';\par
+        document.getElementById('etape2').style.display = 'none';\par
+        document.getElementById('etape3').style.display = 'block';\par
+        document.getElementById('progress').style.width = '100%';\par
+    \}\par
+\par
+    document.getElementById('demande-form').addEventListener('submit', function(event) \{\par
+        event.preventDefault();\par
+        if (!document.getElementById('consentement').checked) \{\par
+            alert('Vous devez accepter la politique de confidentialit\'e9.');\par
+            return;\par
+        \}\par
+        alert('Demande envoy\'e9e avec succ\'e8s !');\par
+        this.reset();\par
+        allerEtape1();\par
+        document.getElementById('progress').style.width = '0%';\par
+    \});\par
+</script>\par
+}
